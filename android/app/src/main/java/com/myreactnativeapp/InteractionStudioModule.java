@@ -148,5 +148,51 @@ class InteractionStudioModule extends ReactContextBaseJavaModule {
         }
         callback.invoke();
     }
+    @ReactMethod
+    void signup(String email_address, String first_name, String last_name, Callback callback){
+        Evergage evergage = Evergage.getInstance();
+        Context context = Evergage.getInstance().getGlobalContext();
+        try{
+            //String Confirm EmailAddress="";
+            evergage.setUserAttribute("firstName",first_name);
+            evergage.setUserAttribute("lastName",last_name);
+            evergage.setUserId(email_address);
+            //evergage.setUserAttribute("emailAddress","harsha@gmail.com");
+            evergage.setUserAttribute("ConfirmemailAddress",email_address);
+            //evergage.setUserAttribute("phone",Integer.toString(phonenumber));
+            //evergage.setUserAttribute("emailAddress","harshavaranasi@gmail.com");
+            //evergage.setAccountId(email_address);
+        }
+
+        catch(Exception e)
+        {
+
+        }
+        callback.invoke();
+    }
+    @ReactMethod
+    void signin(String email_address, Callback callback){
+        Evergage evergage = Evergage.getInstance();
+        Context context = Evergage.getInstance().getGlobalContext();
+        try{
+            //context.setAccountAttribute(email,email_address);
+            //MainApplication m = new MainApplication();
+            //m.onCreate("harsha@gmail.com");
+            //String emailAddress="";
+            //evergage.setAccountAttribute(emailAddress,email_address);
+            //evergage.setUserAttribute("emailAddress",email_address);
+            //evergage.setUserAttribute("emailAddress","harsha@gmail.com");
+            evergage.setUserId(email_address);
+            evergage.setUserAttribute("ConfirmemailAddress",email_address);
+            //evergage.setAccountId(email_address);
+            //evergage.setUserId(email_address);
+            //evergage.setUserAttribute(Email Address,email_address);
+        }
+        catch(Exception e)
+        {
+
+        }
+        callback.invoke();
+    }
 
 }

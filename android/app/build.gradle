@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply plugin: "com.google.gms.google-services"
 import com.android.build.OutputFile
 
 /**
@@ -128,7 +128,8 @@ def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitect
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    //compileSdkVersion rootProject.ext.compileSdkVersion+1
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.myreactnativeapp" // dpowney
@@ -138,6 +139,7 @@ android {
         versionName "1.0"
         // dpowney
         resValue "string", "evergage_scheme", "evgvw94p"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -196,6 +198,10 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    //implementation 'com.google.firebase:firebase-analytics'
+    //implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.android.support:multidex:1.0.3'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

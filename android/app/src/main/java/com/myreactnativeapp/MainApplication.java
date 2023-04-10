@@ -64,9 +64,14 @@ public class MainApplication extends Application implements ReactApplication {
     Evergage.initialize(this);
     
     Evergage evergage = Evergage.getInstance();
-
+    //evergage.setAccountAttribute("email","harsha@gmail.com");
     //evergage.setUserId("8663c7faa2bd7dbb1dd8d117");
-    evergage.setUserId(evergage.getAnonymousId());
+    //evergage.setAccountId(null);
+
+    //evergage.setUserId(null);
+    //evergage.setUserId(evergage.getUserId());
+    //evergage.setUserId(evergage.getAnonymousId());
+   // evergage.setUserAttribute("emailAddress","harsha@gmail.com");
 
     evergage.start(new ClientConfiguration.Builder()
       .account("pricewaterhouseamer2")

@@ -1,10 +1,13 @@
-import React, {useRef} from "react";
+import React, {useRef, useState, useEffect } from "react";
 import { Button, View, Text, NativeModules, NativeEventEmitter, Alert, Image } from "react-native";
 import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const { InteractionStudioModule } = NativeModules;
 const Stack = createNativeStackNavigator();
+import Signup from './src/Signup';
+import Login from './src/Login';
+import auth from '@react-native-firebase/auth';
 
 /**
  * Simple app with 2 screens. The home screen has a button which sends an 
@@ -14,6 +17,21 @@ function App() {
 
     const navigationRef = useNavigationContainerRef();
     const routeNameRef = useRef();
+    const [initializing, setInitializing] = useState(true);
+      const [user, setUser] = useState();
+
+      // Handle user state changes
+      function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+      }
+
+      useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+      }, []);
+
+      if (initializing) return null;
 
     return (
         <NavigationContainer
@@ -48,7 +66,9 @@ function App() {
             }}
         >
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
+<Stack.Screen name="Home" component={HomeScreen} />
+<Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Product" component={ProductScreen} />
                  <Stack.Screen name="Category" component={CategoryScreen} />
             </Stack.Navigator>
@@ -86,7 +106,20 @@ function ProductScreen({ navigation: { goBack, navigate } }) {
         </View>
     );
 }
-
+//function SignupScreen(){
+//return (
+//    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//      <Text>Signup</Text>
+//    </View>
+//  );
+//}
+//function SigninScreen(){
+//return (
+//    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//      <Text>Signin</Text>
+//    </View>
+//  );
+//}
 /**
  * Home screen
  */
@@ -139,6 +172,18 @@ class HomeScreen extends React.Component {
                         this.props.navigation.navigate("Product");
                     }}
                 />
+                <Button
+                                    title="Sign up"
+                                    onPress={() => {
+                                        this.props.navigation.navigate("Signup");
+                                    }}
+                 />
+                 <Button
+                                                     title="Sign In"
+                                                     onPress={() => {
+                                                         this.props.navigation.navigate("Login");
+                                                     }}
+                                  />
             </View>
         );
     }
